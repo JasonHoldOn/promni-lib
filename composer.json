@@ -1,0 +1,20 @@
+{
+    "name": "jasonnobugs/promni-lib",
+    "description": "promni lib",
+    "type": "library",
+    "authors": [
+        {
+            "name": "zhaoyingnan",
+            "email": "zhaoyingnan@promni.cn"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "illuminate/redis": "~5.0|~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jason\\": "src/"
+        }
+    }
+}
