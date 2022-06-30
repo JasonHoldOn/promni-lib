@@ -4,6 +4,7 @@
 namespace Jason\Common\Cache;
 
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Jason\Utils\Tools;
 
@@ -108,13 +109,17 @@ class GroupMall extends Cache
             $list = [];
             $connection = self::$dbConnection;
             $mallCollection = DB::connection($connection)->table('GM_mall')->orderBy(DB::raw('code + 0'))->get();
+            $allGroup = self::getAllGroup();
+            $groupIdCodeMap = Arr::pluck($allGroup, 'code', 'id');
+            $groupIdNameMap = Arr::pluck($allGroup, 'name', 'id');
             foreach ($mallCollection as $mall) {
                 $id = $mall->id;
                 $code = $mall->code;
                 $systemConfig = json_decode($mall->system_config ?: '', true);
+                $groupId = $mall->group_id;
                 $format = [
                     'id'           => $id,
-                    'groupId'      => $mall->group_id,
+                    'groupId'      => $groupId,
                     'code'         => $code,
                     'offlineCode'  => $mall->offline_code,
                     'logo'         => $mall->logo,
@@ -134,8 +139,8 @@ class GroupMall extends Cache
                     'created_at'   => (string)$mall->created_at,
                     'updated_at'   => (string)$mall->updated_at,
                     'Group'        => [
-                        'name' => $mall->groupRelated->name,
-                        'code' => $mall->groupRelated->code,
+                        'name' => $groupIdNameMap[$groupId] ?? '',
+                        'code' => $groupIdCodeMap[$groupId] ?? 0,
                     ],
                 ];
                 $list[] = $format;
