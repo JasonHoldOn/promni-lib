@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Schema;
 
 class CouponClass extends Cache
 {
-    public static $redisConnection = 'gm_public';
-    public static $dbConnection    = 'crm_public';
+    protected static $redisConnection = 'gm_public';
+    protected static $dbConnection    = 'crm_public';
 
     /**
      * 获取优惠券所有信息

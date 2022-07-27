@@ -10,9 +10,9 @@ use Jason\Utils\Tools;
 
 class GroupMall extends Cache
 {
-    public static $redisConnection = 'gm_public';
+    protected static $redisConnection = 'gm_public';
 
-    public static $dbConnection = 'crm_public';
+    protected static $dbConnection = 'crm_public';
 
     public static function getGroupById(string $id): array
     {
