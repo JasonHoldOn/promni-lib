@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Redis;
 
 class Cache
 {
-    static $redisConnection = 'default';
+    public static $redisConnection = 'default';
 
     public static function put(string $key, $value, int $seconds = -1)
     {
