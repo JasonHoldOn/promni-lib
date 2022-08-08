@@ -80,7 +80,7 @@ class CouponClass extends Cache
                 if (in_array($field, $couponUseInfoFieldList, true)) {
                     $couponUseInfo[$field] = $couponClass->{$field};
                 } else {
-                    $couponSimpleInfo[] = $couponClass->{$field};
+                    $couponSimpleInfo[$field] = $couponClass->{$field};
                 }
             }
 
