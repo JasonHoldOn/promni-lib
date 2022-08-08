@@ -5,6 +5,7 @@ namespace Jason\Common\Cache;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class CouponClass extends Cache
 {
@@ -77,10 +78,11 @@ class CouponClass extends Cache
             $filedList = Schema::getColumnListing($tableName);
             $couponUseInfoFieldList = ['config_json', 'use_articles'];
             foreach ($filedList as $field) {
+                $camelField = Str::camel($field);
                 if (in_array($field, $couponUseInfoFieldList, true)) {
-                    $couponUseInfo[$field] = $couponClass->{$field};
+                    $couponUseInfo[$camelField] = $couponClass->{$field};
                 } else {
-                    $couponSimpleInfo[$field] = $couponClass->{$field};
+                    $couponSimpleInfo[$camelField] = $couponClass->{$field};
                 }
             }
 
