@@ -17,10 +17,7 @@ class PromniLibPublicCacheServiceProvider extends ServiceProvider
                 __DIR__ . '/../config/promni-common-cache.php' => config_path('promni-common-cache.php'),
             ]
         );
-    }
 
-    public function register()
-    {
         /** @var Repository $config */
         $config = $this->app->get('config');
         $config->set(
@@ -59,5 +56,9 @@ class PromniLibPublicCacheServiceProvider extends ServiceProvider
                 ) : [],
             ]
         );
+    }
+
+    public function register()
+    {
     }
 }
