@@ -1,25 +1,11 @@
 <?php
 /**
- * 公共缓存配置
- * User: songxudong@promni.cn
- * Date: 2022/11/14
- * Time: 14:56
+ * mysql数据库配置
+ *
  */
 
 return [
-    /** 共用redis配置 */
-    'reids'     => [
-        'host'     => env('REDIS_HOST', '127.0.0.1'),
-        'port'     => env('REDIS_PORT', 6379),
-        'database' => env('PROMNI_COMMON_CACHE_DB', 11),
-        'password' => env('REDIS_PASSWORD', null),
-        'options'  => [
-            'prefix' => env('PROMNI_COMMON_CACHE_PREFIX', 'gm:'),
-        ],
-    ],
-
-    /** mysql数据库配置 */
-    'mysql-crm' => [
+    'crm_public' =>
         [
             'driver'         => 'mysql',
             'host'           => env('CRM_DB_HOST', '127.0.0.1'),
@@ -40,5 +26,4 @@ return [
                 ]
             ) : [],
         ],
-    ],
 ];
