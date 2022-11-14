@@ -26,44 +26,9 @@ class PromniLibPublicCacheServiceProvider extends ServiceProvider
         $commonCacheConfig = $this->app->make('config')->get('promni-common-cache');
 
         /** redis配置 */
-        $redisConfig = $commonCacheConfig['redis'] ?? [];
-        $config->set(
-            'database.redis.gm_public',
-            [
-                'host'     => $redisConfig['host'],
-                'port'     => $redisConfig['port'],
-                'database' => $redisConfig['database'],
-                'password' => $redisConfig['password'],
-                'options'  => [
-                    'prefix' => $redisConfig['prefix'],
-                ],
-            ]
-        );
+        $config->set('database.redis.gm_public', $commonCacheConfig['redis']);
 
         /** mysql数据库配置 */
-        $mysqlCrmConfig = $commonCacheConfig['mysql-crm'] ?? [];
-        $config->set(
-            'database.connections.crm_public',
-            [
-                'driver'         => 'mysql',
-                'host'           => $mysqlCrmConfig['host'],
-                'port'           => $mysqlCrmConfig['port'],
-                'database'       => $mysqlCrmConfig['database'],
-                'username'       => $mysqlCrmConfig['username'],
-                'password'       => $mysqlCrmConfig['password'],
-                'unix_socket'    => $mysqlCrmConfig['unix_socket'],
-                'charset'        => 'utf8mb4',
-                'collation'      => 'utf8mb4_unicode_ci',
-                'prefix'         => '',
-                'prefix_indexes' => true,
-                'strict'         => false,
-                'engine'         => null,
-                'options'        => extension_loaded('pdo_mysql') ? array_filter(
-                    [
-                        PDO::MYSQL_ATTR_SSL_CA => $mysqlCrmConfig['mysql_attr_ssl_ca'],
-                    ]
-                ) : [],
-            ]
-        );
+        $config->set('database.connections.crm_public', $commonCacheConfig['mysql-crm']);
     }
 }
