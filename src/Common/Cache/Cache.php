@@ -28,4 +28,9 @@ class Cache
 
         return null;
     }
+
+    public static function del(string $key)
+    {
+        return Redis::connection(static::$redisConnection)->del($key);
+    }
 }
