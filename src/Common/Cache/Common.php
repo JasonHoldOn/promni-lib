@@ -21,6 +21,11 @@ class Common extends Cache
         return parent::del(self::generateCacheKey('g', $groupCode, $key, $tag));
     }
 
+    public static function batchDelGroupCache(int $groupCode, string $keyMatch, string $tag = '')
+    {
+        return parent::batchDel(self::generateCacheKey('g', $groupCode, $keyMatch, $tag));
+    }
+
     public static function getMallCache(int $mallCode, string $key, string $tag = '')
     {
         return parent::get(self::generateCacheKey('m', $mallCode, $key, $tag));
@@ -34,6 +39,11 @@ class Common extends Cache
     public static function delMallCache(int $mallCode, string $key, string $tag = '')
     {
         return parent::del(self::generateCacheKey('m', $mallCode, $key, $tag));
+    }
+
+    public static function batchDelMallCache(int $mallCode, string $keyMatch, string $tag = '')
+    {
+        return parent::batchDel(self::generateCacheKey('m', $mallCode, $keyMatch, $tag));
     }
 
     private static function generateCacheKey(int $type, int $gmCode, string $key, string $tag = '')
