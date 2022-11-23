@@ -46,7 +46,7 @@ class Common extends Cache
         return parent::batchDel(self::generateCacheKey('m', $mallCode, $keyMatch, $tag));
     }
 
-    private static function generateCacheKey(int $type, int $gmCode, string $key, string $tag = '')
+    private static function generateCacheKey(string $type, int $gmCode, string $key, string $tag = '')
     {
         if (!$tag) {
             $tag = config('app.name');
