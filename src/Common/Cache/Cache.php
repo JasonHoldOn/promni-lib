@@ -12,21 +12,11 @@ class Cache
     protected static $redisConnection = 'default';
 
     /**
-     * @var array
-     */
-    private static $connections;
-
-    /**
      * @return Connection
      */
     private static function getConnection()
     {
-        $connection = self::$connections[static::$redisConnection] ?? null;
-        if (!$connection) {
-            $connection = Redis::connection(static::$redisConnection);
-            self::$connections[static::$redisConnection] = $connection;
-        }
-        return $connection;
+        return Redis::connection(static::$redisConnection);
     }
 
     public static function put(string $key, $value, int $seconds = -1)
@@ -56,10 +46,22 @@ class Cache
     public static function batchDel(string $matchKey)
     {
         $cursor = 0;
+        $redisPrefix = self::getConnection()->getOptions()->prefix->getPrefix();
+        $matchKey = $redisPrefix . $matchKey;
+        $delNums = 0;
         while (true) {
-            [$cursor, $result] = self::getConnection()->scan($cursor, ['match' => $matchKey, 'count' => 50]);
-            if (is_array($result)) {
-                self::getConnection()->del($result);
+            [$cursor, $result] = self::getConnection()->scan($cursor, ['match' => $matchKey, 'count' => 100]);
+            if (is_array($result) && $result) {
+                $delKeys = $result;
+                if ($redisPrefix) {
+                    $delKeys = [];
+                    foreach ($result as $key) {
+                        /** 需要替换掉前缀后删除 */
+                        $delKeys[] = mb_substr($key, mb_strlen($redisPrefix));
+                    }
+                }
+                $delResult = self::getConnection()->del($delKeys);
+                $delNums += $delResult;
             }
 
             if (!$cursor) {
@@ -67,6 +69,6 @@ class Cache
             }
         }
 
-        return true;
+        return $delNums;
     }
 }
