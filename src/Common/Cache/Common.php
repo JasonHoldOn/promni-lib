@@ -11,9 +11,9 @@ class Common extends Cache
         return parent::get(self::generateCacheKey('g', $groupCode, $key, $tag));
     }
 
-    public static function setGroupCache(int $groupCode, string $key, $cacheValue, string $tag = '')
+    public static function setGroupCache(int $groupCode, string $key, $cacheValue, string $tag = '', int $seconds = -1)
     {
-        return parent::put(self::generateCacheKey('g', $groupCode, $key, $tag), $cacheValue);
+        return parent::put(self::generateCacheKey('g', $groupCode, $key, $tag), $cacheValue, $seconds);
     }
 
     public static function delGroupCache(int $groupCode, string $key, string $tag = '')
@@ -31,9 +31,9 @@ class Common extends Cache
         return parent::get(self::generateCacheKey('m', $mallCode, $key, $tag));
     }
 
-    public static function setMallCache(int $mallCode, string $key, $cacheValue, string $tag = '')
+    public static function setMallCache(int $mallCode, string $key, $cacheValue, string $tag = '', int $seconds = -1)
     {
-        return parent::put(self::generateCacheKey('m', $mallCode, $key, $tag), $cacheValue);
+        return parent::put(self::generateCacheKey('m', $mallCode, $key, $tag), $cacheValue, $seconds);
     }
 
     public static function delMallCache(int $mallCode, string $key, string $tag = '')
@@ -46,7 +46,7 @@ class Common extends Cache
         return parent::batchDel(self::generateCacheKey('m', $mallCode, $keyMatch, $tag));
     }
 
-    private static function generateCacheKey(string $type, int $gmCode, string $key, string $tag = '')
+    public static function generateCacheKey(string $type, int $gmCode, string $key, string $tag = '')
     {
         if (!$tag) {
             $tag = config('app.name');
