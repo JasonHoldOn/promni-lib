@@ -2,6 +2,7 @@
     "name": "jasonnobugs/promni-lib",
     "description": "promni lib",
     "type": "library",
+    ""license":"MIT",
     "authors": [
         {
             "name": "zhaoyingnan",
